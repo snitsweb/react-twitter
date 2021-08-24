@@ -1,96 +1,124 @@
-import React from 'react';
-import {NavLink} from "react-router-dom";
-import {List, ListItem, ListItemIcon, ListItemText, Button} from "@material-ui/core";
-import TwitterIcon from "@material-ui/icons/Twitter";
-import SearchIcon from "@material-ui/icons/Search";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import EmailIcon from "@material-ui/icons/Email";
-import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
-import ListAltIcon from "@material-ui/icons/ListAlt";
-import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
-import {useHomeStyles} from "../pages/Home";
+import React, {useState} from 'react';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import SearchIcon from '@material-ui/icons/Search';
+import NotificationIcon from '@material-ui/icons/NotificationsNoneOutlined';
+import MessageIcon from '@material-ui/icons/EmailOutlined';
+import BookmarkIcon from '@material-ui/icons/BookmarkBorderOutlined';
+import ListIcon from '@material-ui/icons/ListAltOutlined';
+import UserIcon from '@material-ui/icons/PermIdentityOutlined';
+import CreateIcon from '@material-ui/icons/Create';
+import Hidden from '@material-ui/core/Hidden';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import { useHomeStyles } from '../pages/Home/theme';
+import { ModalBlock } from './ModalBlock';
+import { AddTweetForm } from './AddTweetForm';
+
 
 interface SideMenuProps {
     classes: ReturnType<typeof useHomeStyles>;
 }
 
 export const SideMenu: React.FC<SideMenuProps> = ({classes}: SideMenuProps): React.ReactElement => {
+    const [isVisibleAddTweet, setIsVisibleAddTweet] = useState(false)
+
+    const handleVisibleAddTweet = () => {
+        setIsVisibleAddTweet(!isVisibleAddTweet)
+    }
+
     return (
-        <div>
-            <List>
-                <ListItem button className={classes.sideMenuLinkWrapper}>
-                    <NavLink className={classes.sideMenuLink} to="/home">
-                        <ListItemIcon className={classes.sideMenuIconWrapper}>
-                            <TwitterIcon className={classes.sideMenuIcon}/>
-                        </ListItemIcon>
-                        <ListItemText classes={{primary: classes.sideMenuTitle}}>Główna</ListItemText>
-                    </NavLink>
-                </ListItem>
+        <ul className={classes.sideMenuList}>
+            <li className={classes.sideMenuListItem}>
+                <IconButton className={classes.logo} aria-label="" color="primary">
+                    <TwitterIcon className={classes.logoIcon} />
+                </IconButton>
+            </li>
+            <li className={classes.sideMenuListItem}>
+                <div>
+                    <SearchIcon className={classes.sideMenuListItemIcon} />
+                    <Hidden smDown>
+                        <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                            Поиск
+                        </Typography>
+                    </Hidden>
+                </div>
+            </li>
+            <li className={classes.sideMenuListItem}>
+                <div>
+                    <NotificationIcon className={classes.sideMenuListItemIcon} />
+                    <Hidden smDown>
+                        <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                            Уведомления
+                        </Typography>
+                    </Hidden>
+                </div>
+            </li>
+            <li className={classes.sideMenuListItem}>
+                <div>
+                    <MessageIcon className={classes.sideMenuListItemIcon} />
 
-                <ListItem button className={classes.sideMenuLinkWrapper}>
-                    <NavLink className={classes.sideMenuLink} to="/about">
-                        <ListItemIcon className={classes.sideMenuIconWrapper}>
-                            <SearchIcon className={classes.sideMenuIcon} />
-                        </ListItemIcon>
-                        <ListItemText classes={{primary: classes.sideMenuTitle}}>Szukaj</ListItemText>
-                    </NavLink>
-                </ListItem>
+                    <Hidden smDown>
+                        <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                            Сообщения
+                        </Typography>
+                    </Hidden>
+                </div>
+            </li>
+            <li className={classes.sideMenuListItem}>
+                <div>
+                    <BookmarkIcon className={classes.sideMenuListItemIcon} />
 
-                <ListItem button className={classes.sideMenuLinkWrapper}>
-                    <NavLink className={classes.sideMenuLink} to="/about">
-                        <ListItemIcon className={classes.sideMenuIconWrapper}>
-                            <NotificationsIcon className={classes.sideMenuIcon} />
-                        </ListItemIcon>
-                        <ListItemText
-                            classes={{primary: classes.sideMenuTitle}}>Powiadomienia</ListItemText>
-                    </NavLink>
-                </ListItem>
+                    <Hidden smDown>
+                        <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                            Закладки
+                        </Typography>
+                    </Hidden>
+                </div>
+            </li>
+            <li className={classes.sideMenuListItem}>
+                <div>
+                    <ListIcon className={classes.sideMenuListItemIcon} />
 
-                <ListItem button className={classes.sideMenuLinkWrapper}>
-                    <NavLink className={classes.sideMenuLink} to="/about">
-                        <ListItemIcon className={classes.sideMenuIconWrapper}>
-                            <EmailIcon className={classes.sideMenuIcon} />
-                        </ListItemIcon>
-                        <ListItemText classes={{primary: classes.sideMenuTitle}}>Wiadomości</ListItemText>
-                    </NavLink>
-                </ListItem>
+                    <Hidden smDown>
+                        <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                            Список
+                        </Typography>
+                    </Hidden>
+                </div>
+            </li>
+            <li className={classes.sideMenuListItem}>
+                <div>
+                    <UserIcon className={classes.sideMenuListItemIcon} />
 
-                <ListItem button className={classes.sideMenuLinkWrapper}>
-                    <NavLink className={classes.sideMenuLink} to="/about">
-                        <ListItemIcon className={classes.sideMenuIconWrapper}>
-                            <BookmarkBorderIcon className={classes.sideMenuIcon} />
-                        </ListItemIcon>
-                        <ListItemText classes={{primary: classes.sideMenuTitle}}>Zakładki</ListItemText>
-                    </NavLink>
-                </ListItem>
-
-                <ListItem button className={classes.sideMenuLinkWrapper}>
-                    <NavLink className={classes.sideMenuLink} to="/about">
-                        <ListItemIcon className={classes.sideMenuIconWrapper}>
-                            <ListAltIcon className={classes.sideMenuIcon} />
-                        </ListItemIcon>
-                        <ListItemText classes={{primary: classes.sideMenuTitle}}>Lista</ListItemText>
-                    </NavLink>
-                </ListItem>
-
-                <ListItem button className={classes.sideMenuLinkWrapper}>
-                    <NavLink className={classes.sideMenuLink} to="/about">
-                        <ListItemIcon className={classes.sideMenuIconWrapper}>
-                            <PersonOutlineIcon className={classes.sideMenuIcon} />
-                        </ListItemIcon>
-                        <ListItemText classes={{primary: classes.sideMenuTitle}}>Profil</ListItemText>
-                    </NavLink>
-                </ListItem>
-
-                <ListItem >
-                    <NavLink className={classes.sideMenuTweetBtn} to="/">
-                        <Button className={classes.sideMenuTweetBtnText} variant="contained" color="primary" fullWidth>Tweetnij</Button>
-                    </NavLink>
-                </ListItem>
-
-            </List>
-        </div>
+                    <Hidden smDown>
+                        <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                            Профиль
+                        </Typography>
+                    </Hidden>
+                </div>
+            </li>
+            <li className={classes.sideMenuListItem}>
+                <Button
+                    onClick={handleVisibleAddTweet}
+                    className={classes.sideMenuTweetButton}
+                    variant="contained"
+                    color="primary"
+                    fullWidth>
+                    <Hidden smDown>Твитнуть</Hidden>
+                    <Hidden mdUp>
+                        <CreateIcon />
+                    </Hidden>
+                </Button>
+                <ModalBlock onClose={handleVisibleAddTweet} visible={isVisibleAddTweet} title="">
+                    <div style={{ width: 550 }}>
+                        <AddTweetForm maxRows={15} classes={classes} />
+                    </div>
+                </ModalBlock>
+            </li>
+        </ul>
     );
+
 }
 
 export default SideMenu;

@@ -7,7 +7,6 @@ export function* fetchTweetsRequest() {
     try {
         const items: Tweet[] = yield call(TweetsApi.fetchTweets);
         yield put(setTweets(items))
-        console.log(items)
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingState.ERROR))
     }

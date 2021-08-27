@@ -20,16 +20,24 @@ import {AddTweetForm} from "../../components/AddTweetForm";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchTweets} from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoaded, selectTweetsItems} from "../../store/ducks/tweets/selector";
+import {selectIsTagsLoaded, selectTagsItems} from "../../store/ducks/tags/selector";
+import {fetchTags} from "../../store/ducks/tags/actionCreators";
+import Tags from "../../components/Tags";
 
 export const Home: React.FC = (): React.ReactElement => {
     const classes = useHomeStyles()
     const dispatch = useDispatch()
+
     const tweets = useSelector(selectTweetsItems)
-    const isLoaded = useSelector(selectIsTweetsLoaded)
+    const isLoadedTweets = useSelector(selectIsTweetsLoaded)
+
+    const tags = useSelector(selectTagsItems)
+    const isLoadedTags = useSelector(selectIsTagsLoaded)
 
 
     React.useEffect(() => {
         dispatch(fetchTweets())
+        dispatch(fetchTags())
     },  // eslint-disable-next-line
         [])
 
@@ -52,7 +60,7 @@ export const Home: React.FC = (): React.ReactElement => {
                                 <div className={classes.addFormBottomLine}/>
                             </Paper>
 
-                            {isLoaded ? <div className={classes.tweetsCentered}><CircularProgress /> </div> : tweets.map(tweet =>
+                            {isLoadedTweets ? <div className={classes.tweetsCentered}><CircularProgress /> </div> : tweets.map(tweet =>
                                 <Tweet key={tweet._id}
                                        text={tweet.text}
                                        classes={classes}
@@ -74,46 +82,7 @@ export const Home: React.FC = (): React.ReactElement => {
                             }}
                             fullWidth
                         />
-                        <Paper className={classes.rightSideBlock}>
-                            <Paper className={classes.rightSideBlockHeader} variant="outlined">
-                                <b>Актуальные темы</b>
-                            </Paper>
-                            <List>
-                                <ListItem className={classes.rightSideBlockItem}>
-                                    <ListItemText
-                                        primary="Санкт-Петербург"
-                                        secondary={
-                                            <Typography component="span" variant="body2" color="textSecondary">
-                                                Твитов: 3 331
-                                            </Typography>
-                                        }
-                                    />
-                                </ListItem>
-                                <Divider component="li"/>
-                                <ListItem className={classes.rightSideBlockItem}>
-                                    <ListItemText
-                                        primary="#коронавирус"
-                                        secondary={
-                                            <Typography component="span" variant="body2" color="textSecondary">
-                                                Твитов: 163 122
-                                            </Typography>
-                                        }
-                                    />
-                                </ListItem>
-                                <Divider component="li"/>
-                                <ListItem className={classes.rightSideBlockItem}>
-                                    <ListItemText
-                                        primary="Беларусь"
-                                        secondary={
-                                            <Typography component="span" variant="body2" color="textSecondary">
-                                                Твитов: 13 554
-                                            </Typography>
-                                        }
-                                    />
-                                </ListItem>
-                                <Divider component="li"/>
-                            </List>
-                        </Paper>
+                        <Tags classes={classes} items={tags} isLoaded={isLoadedTags}/>
                         <Paper className={classes.rightSideBlock}>
                             <Paper className={classes.rightSideBlockHeader} variant="outlined">
                                 <b>Кого читать</b>
